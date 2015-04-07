@@ -2,7 +2,7 @@
 socks5 check:
 ```sh
 curl --proxy socks5h://127.0.0.1:1082 http://baidu.com
-```sh
+```
 ============
 ```sh
 git config core.gitproxy  '/home/wow/proxy/socks5proxywrapper'
