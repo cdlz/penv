@@ -1,0 +1,20 @@
+[core]
+  gitproxy = /home/wow/proxy/socks5proxywrapper
+
+[user]
+	email = email@qq.com
+	name = zc
+
+[http]
+	sslverify = false
+
+[merge]
+	tool = vimdiff
+
+[alias]
+	co = checkout
+	ci = commit
+	br = branch
+	last = log --graph --color -3
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --abbrev-commit
+	pom = push origin master

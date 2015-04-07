@@ -1,0 +1,8 @@
+{
+    "server":"ssa_ip",
+    "server_port":8389,
+    "local_port":1082,
+    "password":"usr:pwd",
+    "method": "aes-256-cfb",
+    "timeout": 600
+}
