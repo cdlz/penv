@@ -1,3 +1,7 @@
+#local
+
+vimconfig/backup
+
 # Compiled Object files
 *.slo
 *.lo
