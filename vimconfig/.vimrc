@@ -334,7 +334,7 @@ endfunction
   nmap <F10> <ESC><C-W><UP>
   nmap <F11> <ESC><C-W><DOWN> 
   nmap <F12> <ESC><c-w>w  "循环窗口
-  
+  map <F5> <ESC>:w<CR>:! python  ./%<CR> 
 
   "放置在Bundle的设置后，防止意外BUG
   filetype plugin indent on
