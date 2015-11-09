@@ -6,7 +6,10 @@ mkdir backup 1>/dev/null 2>&1
 mv ~/.vimrc backup/`date +%Y%m%d`.vimrc 1>/dev/null 2>&1
 mv ~/.vim backup/`date +%Y%m%d`.vim  1>/dev/null 2>&1
 
-tar zxf ./vimconf.tgz  -C ~/
-echo "finished"
+#tar zxf ./vimconf.tgz  -C ~/
+cp -R .vim ~/.vim
+cp -R .vimrc ~/.vimrc
+
+echo "finished[use BundleInstall for ensure the bundles had been installed successfully]"
 
 

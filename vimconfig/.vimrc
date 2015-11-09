@@ -53,6 +53,7 @@ endif
   set cmdheight=2                                       "设置命令行的高度为2，默认为1
   set cursorline                                        "突出显示当前行 
   set shortmess=atI                                     "去掉欢迎界面
+  "状态页面展示
   set statusline=%F%m%r\ \|\ %{&ff},%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\ \"},%Y\ \|%=\ %l/%L,%c\ \|\ %f
                             " 设置在状态行显示的信息如下：
                             " %f    当前的文件名
@@ -74,9 +75,11 @@ endif
                             " %L    当前文件总行数
   
   set number                                    "显示行号
+  "ctrl+r :redo  ;   u : undo
   set undofile                                  "unlimited undo,and dir redirect to vimfiles
   set undodir=$VIMFILES/\_undofiles
   set undolevels=1000 "maximum number of changes that can be undone
+
   
   "set nowrap                                    "禁止自动换行
   "autocmd! bufwritepost _vimrc source %         "自动载入配置文件不需要重启
@@ -150,9 +153,6 @@ endif
   "搜索替换
   nmap <leader>s :,s///c
 
-  "取消粘贴缩进
-  nmap <leader>p :set paste<CR>
-  nmap <leader>pp :set nopaste<CR>
 
   "文件类型切换
   nmap <leader>fj :set ft=javascript<CR>
@@ -205,10 +205,14 @@ endif
   Bundle 'Lokaltog/vim-easymotion'
     let g:EasyMotion_smartcase = 0
     let g:EasyMotion_do_mapping = 0 " Disable default mappings
+    "quick jump; s -> input one char, and choose a char on  current screen,highited  for quick jump
     nmap s <Plug>(easymotion-s)
     nmap S <Plug>(easymotion-s2)
+    "jump to which line; j before current line; k after current line
     map <Leader>j <Plug>(easymotion-j)
     map <Leader>k <Plug>(easymotion-k)
+    map <Leader>,. <Plug>(easymotion-repeat)
+
 
   Bundle 'The-NERD-tree' 
     let g:NERDTreeShowBookmarks=1
@@ -260,13 +264,22 @@ endif
    
   
   Bundle 'std_c.zip'
+    " 用于增强C语法高亮
+    " 启用 // 注视风格
+    let c_cpp_comments = 0
+
+  "最大化/恢复 当前光标所在窗口
+  "Press <c-w>o : the current window zooms into a full screen
+  "Press <c-w>o again: the previous set of windows is restored
   Bundle 'ZoomWin'
+
+
   "高亮显示插件
   "Bundle 'Mark--Karkat'
   
   
+  " 增强源代码浏览，其功能就像Windows中的"Source Insight"
   Bundle 'wesleyche/SrcExpl'
-   " 增强源代码浏览，其功能就像Windows中的"Source Insight"
    nmap <F3> :SrcExplToggle<CR>                "打开/闭浏览窗口
 
   Bundle 'winmanager'
@@ -288,6 +301,8 @@ endif
 " -----------------------------------------------------------------------------
 " 用Cscope自己的话说 - "你可以把它当做是超过频的ctags"
 if has("cscope")
+    "vim启动的时候加上cs索引文件,use cscope_update_db.sh to add changes to db.
+    cs add $HOME/.cscope/cscope.out 
     "设定可以使用 quickfix 窗口来查看 cscope 结果
     set cscopequickfix=s-,c-,d-,i-,t-,e-
     "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
@@ -303,13 +318,24 @@ if has("cscope")
     endif
     set cscopeverbose
     "快捷键设置
+    "exp: on sourcefile word , press: ctrl+\ and s ,goto this symbol
+    "  :cw QuickFix窗口 output.  ctrl+o return the last place.
+    " :csreset  重新初始化所有连接
+    "s   查找本 C 符号(可以跳过注释) 
     nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    "g   查找本定义
     nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    "d   查找本函数调用的函数 
     nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    "c   查找调用本函数的函数 
     nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+    "t   查找本字符串
     nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    "e   查找本 egrep 模式
     nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    "f   查找本文件
     nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    "i   查找包含本文件的文件
     nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
 
@@ -334,6 +360,7 @@ endfunction
   nmap <F10> <ESC><C-W><UP>
   nmap <F11> <ESC><C-W><DOWN> 
   nmap <F12> <ESC><c-w>w  "循环窗口
+  "for current language only.
   map <F5> <ESC>:w<CR>:! python  ./%<CR> 
 
   "放置在Bundle的设置后，防止意外BUG
@@ -341,6 +368,11 @@ endfunction
   syntax on
   "需要调整window大小时,可以手动设置后用鼠标调整
   "set mouse=a
-  " unselected for paste's indent.
+  "取消粘贴缩进
+  nmap <leader>p :set paste<CR>
+  nmap <leader>pp :set nopaste<CR>
+  " unselected for paste's indent default.
   set paste
   
+"at last, notice,this vim quick key use mapleader: ,
+
