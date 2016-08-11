@@ -254,5 +254,3 @@ apt-get install  -y build-essential mysql-client-5.7  libmysqld-dev
 apt-get install  -y  python-pip
 echo "[done]"
 
-sleep 2
-exit 0
